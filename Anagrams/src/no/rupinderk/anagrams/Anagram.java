@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,13 +18,12 @@ public class Anagram {
 
 	public static void main(String[] args) {
 		Path path = Paths.get(DICTIONARY);
-		try (Stream<String> lines = Files.lines(path, Charset.forName(DICTIONARY_CHARSET)))
-		{
-			 Map<String, List<String>> groupedBySortedChars = lines.collect(Collectors.groupingBy(Anagram::getSortedChars));
-	         List<String> joinedStrings = getJoinOfStrings(groupedBySortedChars);
-	         joinedStrings.stream().forEach(System.out::println);
-
+		try (Stream<String> lines = Files.lines(path, Charset.forName(DICTIONARY_CHARSET))) {
+			Map<String, List<String>> groupedBySortedChars = lines
+					.collect(Collectors.groupingBy(Anagram::getSortedChars));
+			List<String> joinedStrings = getJoinOfStrings(groupedBySortedChars);
 			joinedStrings.stream().forEach(System.out::println);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
