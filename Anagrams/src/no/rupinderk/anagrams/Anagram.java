@@ -19,11 +19,11 @@ public class Anagram {
 
 	public static void main(String[] args) {
 		Path path = Paths.get(DICTIONARY);
-		try (Stream<String> lines = Files.lines(path, Charset.forName(DICTIONARY_CHARSET))) {
-			Collector<String, ?, Map<String, List<String>>> groupingBy = Collectors.groupingBy(Anagram::getSortedChars);
-			Map<String, List<String>> groupedBySortedChars = lines.collect(groupingBy);
-
-			List<String> joinedStrings = getJoinOfStrings(groupedBySortedChars);
+		try (Stream<String> lines = Files.lines(path, Charset.forName(DICTIONARY_CHARSET)))
+		{
+			 Map<String, List<String>> groupedBySortedChars = lines.collect(Collectors.groupingBy(Anagram::getSortedChars));
+	         List<String> joinedStrings = getJoinOfStrings(groupedBySortedChars);
+	         joinedStrings.stream().forEach(System.out::println);
 
 			joinedStrings.stream().forEach(System.out::println);
 		} catch (IOException e) {
